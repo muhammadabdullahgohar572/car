@@ -1,24 +1,31 @@
-
-import { Route, Routes } from 'react-router'
-import './App.css'
-import { Navbar } from './assets/pages/Navbar'
-import CreateUsPage from './assets/pages/contectus'
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import { Navbar } from "./assets/pages/Navbar";
+import CreateUsPage from './assets/pages/contectus';
+import Login from './assets/pages/Login';
+import Signup from './assets/pages/sigup';
+import Footer from "./assets/pages/Footer";
 
 function App() {
-  
-
   return (
     <>
-    {/* https://nafeesrentacarpakistan.pk/contact/ */}
-      <Navbar/>
-      {/* Your component here */}
-      <Routes>
-        <Route path="/" />
-      
-        <Route path="/contactus" element={<CreateUsPage/>} />
-      </Routes>
+      {/* Navbar */}
+      <div className="fixed top-0 left-0 z-30 w-full">
+        <Navbar />
+      </div>
+
+      {/* Main Content with margin-top to avoid overlap with Navbar */}
+      <div className="mt-[60%] sm:mt-[20%] top-44"> {/* Adjust margin-top based on the height of the navbar */}
+        <Routes>
+          <Route path="/" />
+          <Route path="/contactus" element={<CreateUsPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </div>
+      <Footer/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
