@@ -7,6 +7,8 @@ import Signup from './assets/pages/sigup';
 import Footer from "./assets/pages/Footer";
 import  CarRental  from "./assets/pages/About";
 import { Vehicle } from "./assets/pages/Vehicle";
+import { Tours } from "./assets/pages/Tower";
+import { Location } from "./assets/pages/Location";
 
 
 function App() {
@@ -25,6 +27,10 @@ function App() {
           <Route path="/contactus" element={<CreateUsPage />} />
           
           <Route path="/Vehicle" element={<Vehicle/>} />
+          <Route path="/Tours" element={<Tours/>} />
+          <Route path="/Location" element={<Location/>} />
+
+         
 
           <Route path="/login" element={<Login />} />
           <Route path="/Rates" element={<CarRental/>} />

@@ -10,7 +10,7 @@ export const Navbar = () => {
         <div className="mb-2 sm:mb-0 flex items-center justify-center">
           <i className="fa-solid fa-phone text-yellow-300 text-lg sm:text-xl"></i>
           <span className="text-sm md:text-lg ml-2 font-semibold">
-            0313038410
+            03133038410
           </span>
         </div>
         {/* Email */}
@@ -18,7 +18,7 @@ export const Navbar = () => {
           <i className="fa-solid fa-envelope text-yellow-300 text-lg sm:text-xl"></i>
           <span className="text-sm md:text-base ml-2 font-semibold">
             engineermuhammadabdullahgohar
-             572@gmail.com
+            @gmail.com
           </span>
         </div>
         {/* Address */}
@@ -50,9 +50,9 @@ export const Navbar = () => {
               { path: "#", label: "Services" },
               { path: "/contactus", label: "Contact" },
               { path: "#", label: "Reviews" },
-              { path: "#", label: "Location" },
+              { path: "Location", label: "Location" },
               { path: "Rates", label: "Rates" },
-              { path: "#", label: "Tours" },
+              { path: "Tours", label: "Tours" },
               { path: "Vehicle", label: "Vehicles" },
             ].map((item, index) => (
               <Link
