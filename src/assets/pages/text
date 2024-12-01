@@ -1,0 +1,101 @@
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { motion } from "framer-motion"
+
+interface CarCard {
+  image: string
+  category: string
+  model: string
+  price: number
+}
+
+const cars: CarCard[] = [
+  {
+    image: "/placeholder.svg?height=200&width=300",
+    category: "Standard/Sedan",
+    model: "Toyota Corolla Altis",
+    price: 6000,
+  },
+  {
+    image: "/placeholder.svg?height=200&width=300",
+    category: "Standard/Sedan",
+    model: "Toyota Corolla GLI",
+    price: 5000,
+  },
+  {
+    image: "/placeholder.svg?height=200&width=300",
+    category: "Standard/Sedan",
+    model: "Honda Civic",
+    price: 8000,
+  },
+]
+
+const MotionCard = motion(Card)
+
+export default function CarRentalCards() {
+  return (
+    <div className="container mx-auto p-6">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {cars.map((car, index) => (
+          <MotionCard 
+            key={index} 
+            className="overflow-hidden transition-shadow duration-300 hover:shadow-xl"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+          >
+            <CardHeader className="p-0">
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <Image
+                  src={car.image}
+                  alt={car.model}
+                  fill
+                  className="object-cover transition-transform duration-300 hover:scale-110"
+                  priority={index === 0}
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="p-4">
+              <motion.div 
+                className="text-amber-500 text-sm font-medium mb-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
+              >
+                {car.category}
+              </motion.div>
+              <motion.h3 
+                className="text-xl font-bold mb-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
+              >
+                {car.model}
+              </motion.h3>
+              <motion.p 
+                className="text-lg font-semibold"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
+              >
+                Rs: {car.price.toLocaleString()} Per Day
+              </motion.p>
+            </CardContent>
+            <CardFooter className="p-4 pt-0">
+              <Button 
+                className="w-full bg-amber-500 hover:bg-amber-600 transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Book Your Ride
+              </Button>
+            </CardFooter>
+          </MotionCard>
+        ))}
+      </div>
+    </div>
+  )
+}

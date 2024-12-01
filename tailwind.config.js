@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       screens: {
-        ssm: "320px", // Extra small screen
+        ssm: "320px",
+        ssml: "375px", // Extra small screen
+         // Extra small screen
         llm: "420px", // Small mobile screen
         xxlm: "769px", // Medium-sized screen
       },
