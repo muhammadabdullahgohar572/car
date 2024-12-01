@@ -9,6 +9,7 @@ import  CarRental  from "./assets/pages/About";
 import { Vehicle } from "./assets/pages/Vehicle";
 import { Tours } from "./assets/pages/Tower";
 import { Location } from "./assets/pages/Location";
+import { About1 } from "./assets/pages/About1";
 
 
 function App() {
@@ -29,7 +30,9 @@ function App() {
           <Route path="/Vehicle" element={<Vehicle/>} />
           <Route path="/Tours" element={<Tours/>} />
           <Route path="/Location" element={<Location/>} />
+          <Route path="/About" element={<About1/>} />
 
+          
          
 
           <Route path="/login" element={<Login />} />

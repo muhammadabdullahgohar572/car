@@ -49,7 +49,7 @@ export const Navbar = () => {
               { path: "/", label: "Home" },
               { path: "#", label: "Services" },
               { path: "/contactus", label: "Contact" },
-              { path: "#", label: "Reviews" },
+              { path: "About", label: "About" },
               { path: "Location", label: "Location" },
               { path: "Rates", label: "Rates" },
               { path: "Tours", label: "Tours" },
