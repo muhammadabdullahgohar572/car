@@ -759,7 +759,7 @@ export const Location = () => {
       
   <Slickk/>
 
-      {/* Service Component */}
+    
       <Service />
     </>
   );

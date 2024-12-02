@@ -47,7 +47,7 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center space-x-6">
             {[
               { path: "/", label: "Home" },
-              { path: "#", label: "Services" },
+              { path: "Services", label: "Services" },
               { path: "/contactus", label: "Contact" },
               { path: "About", label: "About" },
               { path: "Location", label: "Location" },

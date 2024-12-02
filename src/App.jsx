@@ -10,6 +10,8 @@ import { Vehicle } from "./assets/pages/Vehicle";
 import { Tours } from "./assets/pages/Tower";
 import { Location } from "./assets/pages/Location";
 import { About1 } from "./assets/pages/About1";
+import { Services } from "./assets/pages/Services";
+import { Home } from "./assets/pages/Home";
 
 
 function App() {
@@ -24,13 +26,13 @@ function App() {
       {/* Main Content with margin-top to avoid overlap with Navbar */}
       <div className="mt-[80%] ssml:mt-[60%] sm:mt-[18%] top-44"> {/* Adjust margin-top based on the height of the navbar */}
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<Home/>}/>
           <Route path="/contactus" element={<CreateUsPage />} />
-          
           <Route path="/Vehicle" element={<Vehicle/>} />
           <Route path="/Tours" element={<Tours/>} />
           <Route path="/Location" element={<Location/>} />
           <Route path="/About" element={<About1/>} />
+          <Route path="/Services" element={<Services/>} />
 
           
          

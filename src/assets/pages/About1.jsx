@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Service from "../img/controlar/service";
 import { Slickk } from "./slick";
 import "aos/dist/aos.css"; // Import AOS CSS
