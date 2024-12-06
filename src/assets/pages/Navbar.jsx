@@ -8,7 +8,7 @@ export const Navbar = () => {
 
   return (
     <>
-   <div className="bg-black px-3 py-3  text-white sm:py-5 flex flex-col sm:flex-row sm:justify-around text-center">
+      <div className="bg-black px-3 py-3  text-white sm:py-5 flex flex-col sm:flex-row sm:justify-around text-center">
         {/* Phone */}
         <div className="mb-2 sm:mb-0  cursor-pointer flex items-center justify-center">
           <i className="fa-solid fa-phone text-yellow-300 text-lg sm:text-xl"></i>
@@ -41,7 +41,7 @@ export const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center space-x-6">
-          {[
+          {[ 
             { path: "/", label: "Home" },
             { path: "/Services", label: "Services" },
             { path: "/contactus", label: "Contact" },
@@ -100,7 +100,7 @@ export const Navbar = () => {
 
       {/* Mobile Navigation Drawer */}
       <div
-        className={`fixed top-0 left-0 w-[50%] h-full bg-gray-100 shadow-lg z-50 transform ${
+        className={`fixed top-0 left-0 w-[60%] h-full bg-gray-100 shadow-lg z-50 transform ${
           open ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
@@ -114,7 +114,7 @@ export const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="flex flex-col mt-16 space-y-4 px-6">
-          {[
+          {[ 
             { path: "/", label: "Home" },
             { path: "/Services", label: "Services" },
             { path: "/contactus", label: "Contact" },
@@ -127,11 +127,39 @@ export const Navbar = () => {
             <Link
               key={index}
               to={item.path}
-              className="text-black text-lg font-bold  hover:text-yellow-500 transition duration-200"
+              className="text-black text-lg font-bold hover:text-yellow-500 transition duration-200"
             >
               {item.label}
             </Link>
           ))}
+
+          {/* Mobile Buttons */}
+          <div className="mt-4  grid grid-cols-1 gap-3">
+            <Link to="/Signup">
+              <button
+                className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                aria-label="Sign up"
+              >
+                Signup
+              </button>
+            </Link>
+            <Link to="/Login">
+              <button
+                className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                aria-label="Login"
+              >
+                Login
+              </button>
+            </Link>
+            <Link to="/Booking">
+              <button
+                className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                aria-label="Book now"
+              >
+                Book Now
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </>
