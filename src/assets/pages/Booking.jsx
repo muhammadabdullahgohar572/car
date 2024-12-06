@@ -91,7 +91,7 @@ export default function Booking() {
           {/* Submit Button */}
           <div>
             <button
-              type="submit"
+              type=""
               className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
             >
               Next

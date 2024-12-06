@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Slickk } from "./slick";
 import Aos from "aos";
-import { Booking } from "./Booking";
+import  Booking  from "./Booking";
 
 const cars = [
   {
@@ -137,6 +137,10 @@ export const Home = () => {
           </button>
         </div>
       </div>
+
+{/* <Booking/> */}
+
+
 
 <Booking/>
 

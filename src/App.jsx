@@ -12,6 +12,7 @@ import { Location } from "./assets/pages/Location";
 import { About1 } from "./assets/pages/About1";
 import { Services } from "./assets/pages/Services";
 import { Home } from "./assets/pages/Home";
+import Booking from "./assets/pages/Booking";
 
 
 function App() {
@@ -33,9 +34,10 @@ function App() {
           <Route path="/Location" element={<Location/>} />
           <Route path="/About" element={<About1/>} />
           <Route path="/Services" element={<Services/>} />
+          <Route path="/Booking" element={<Booking/>}/>
 
           
-         
+       
 
           <Route path="/login" element={<Login />} />
           <Route path="/Rates" element={<CarRental/>} />
