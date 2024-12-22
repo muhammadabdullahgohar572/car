@@ -1,31 +1,63 @@
-import  { useState } from "react";
-
+import { useState } from "react";
+import { Navigate } from 'react-router-dom';
 function Signup() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    companyName: "",
-    age: "",
+  const [redirectToHome, setRedirectToHome] = useState(false);
+
+  const [data, setdata] = useState({
+    Username: "",
+    Email: "",
+    Password: "",
+    Company_Name: "",
+    Age: "",
+    Gender: "", // Added Gender field
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const methodpost = async () => {
+    if (
+      data.Username &&
+      data.Password &&
+      data.Email &&
+      data.Age &&
+      data.Company_Name &&
+      data.Gender
+    ) {
+      await fetch("https://ecommerce-two-alpha-61.vercel.app/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((dataa) => {
+          console.log(dataa);
+          setdata({
+            Username: "",
+            Email: "",
+            Password: "",
+            Company_Name: "",
+            Age: "",
+            Gender: "",
+          });
+          alert("Success, your account has been created!");
+          setRedirectToHome(true);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      console.log(data);
+    } else {
+      console.log("Please fill all fields:", data);
+    }
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Signup Data:", formData);
-    alert("Signup Successful!");
-  };
-
+  if (redirectToHome) {
+    return <Navigate to="/" />; // Redirect to home page
+  }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
-          Signup
-        </h2>
-        <form onSubmit={handleSubmit}>
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Signup</h2>
+        <form onSubmit={(e) => { e.preventDefault(); methodpost(); }}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700" htmlFor="username">
               Username
@@ -34,8 +66,8 @@ function Signup() {
               type="text"
               id="username"
               name="username"
-              value={formData.username}
-              onChange={handleChange}
+              onChange={(e) => setdata({ ...data, Username: e.target.value })}
+              value={data.Username}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -49,8 +81,8 @@ function Signup() {
               type="email"
               id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              onChange={(e) => setdata({ ...data, Email: e.target.value })}
+              value={data.Email}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -64,8 +96,8 @@ function Signup() {
               type="password"
               id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              onChange={(e) => setdata({ ...data, Password: e.target.value })}
+              value={data.Password}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -79,8 +111,8 @@ function Signup() {
               type="text"
               id="companyName"
               name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
+              onChange={(e) => setdata({ ...data, Company_Name: e.target.value })}
+              value={data.Company_Name}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -94,11 +126,41 @@ function Signup() {
               type="number"
               id="age"
               name="age"
-              value={formData.age}
-              onChange={handleChange}
+              onChange={(e) => setdata({ ...data, Age: e.target.value })}
+              value={data.Age}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="gender">
+              Gender
+            </label>
+            <div className="flex space-x-4">
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Male"
+                  onChange={(e) => setdata({ ...data, Gender: e.target.value })}
+                  checked={data.Gender === "Male"}
+                  className="mr-2"
+                />
+                Male
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Female"
+                  onChange={(e) => setdata({ ...data, Gender: e.target.value })}
+                  checked={data.Gender === "Female"}
+                  className="mr-2"
+                />
+                Female
+              </label>
+            </div>
           </div>
 
           <button

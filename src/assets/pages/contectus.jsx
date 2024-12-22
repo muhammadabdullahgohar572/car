@@ -1,26 +1,40 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import conect from "../img/navbarlogo/rent-a-car-banner-1.jpg";
+import { useState } from "react";
+
 const CreateUsPage = () => {
-  const [formData, setFormData] = useState({
+  const [getData, sendData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic (e.g., send data to an API)
-    console.log("Form submitted", formData);
+  const Conactus = async () => {
+    if (getData.name && getData.email && getData.phone && getData.message) {
+      await fetch("ecommerce-two-alpha-61.vercel.app/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(getData),
+      })
+        .then((res) => {
+          res.json();
+        })
+        .then((Dataa) => {
+          console.log(Dataa);
+          alert("Data Send Successfully");
+          sendData();
+        })
+        .catch((error) => {
+          alert("catch work");
+          console.error("Error:", error);
+        });
+    } else {
+      alert("All Fields Are Required");
+      console.log(getData);
+    }
   };
 
   return (
@@ -56,7 +70,6 @@ const CreateUsPage = () => {
       </div>
 
       <div className="mt-6 p-2">
-
         <div className="flex text-4xl mt-2 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,8 +86,11 @@ const CreateUsPage = () => {
             />
           </svg>
           <p className="text-sm text-gray-600">
-            <span className="font-bold">Head Office:</span> <span className="text-yellow-700  font-bold  sm:text-lg hover:underline"> Nafees Rent A Car,
-            Shahrah-e-Faisal, Karachi</span>
+            <span className="font-bold">Head Office:</span>{" "}
+            <span className="text-yellow-700  font-bold  sm:text-lg hover:underline">
+              {" "}
+              Nafees Rent A Car, Shahrah-e-Faisal, Karachi
+            </span>
           </p>
         </div>
         <div className="flex text-5xl mt-2">
@@ -123,8 +139,7 @@ const CreateUsPage = () => {
               href="mailto:engineermuhammmadabdullahgohar@gmail.com"
               className="text-yellow-700  font-bold   sm:text-lg hover:underline"
             >
-             engineermuhammmadabdullahgohar
-             @gmail.com
+              engineermuhammmadabdullahgohar @gmail.com
             </a>
           </p>
         </div>
@@ -135,7 +150,7 @@ const CreateUsPage = () => {
           <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">
             Get in Touch
           </h2>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-gray-700"
@@ -147,8 +162,7 @@ const CreateUsPage = () => {
                 type="text"
                 id="name"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
+                onChange={(e) => sendData({ ...getData, name: e.target.value })}
                 className="w-full p-2 border border-gray-300 rounded-md"
                 placeholder="Enter your name"
                 required
@@ -166,8 +180,9 @@ const CreateUsPage = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
+                onChange={(e) =>
+                  sendData({ ...getData, email: e.target.value })
+                }
                 className="w-full p-2 border border-gray-300 rounded-md"
                 placeholder="Enter your email"
                 required
@@ -185,8 +200,9 @@ const CreateUsPage = () => {
                 type="tel"
                 id="phone"
                 name="phone"
-                value={formData.phone}
-                onChange={handleChange}
+                onChange={(e) =>
+                  sendData({ ...getData, phone: e.target.value })
+                }
                 className="w-full p-2 border border-gray-300 rounded-md"
                 placeholder="Enter your phone number"
                 required
@@ -201,10 +217,11 @@ const CreateUsPage = () => {
                 Message
               </label>
               <textarea
+                onChange={(e) =>
+                  sendData({ ...getData, message: e.target.value })
+                }
                 id="message"
                 name="message"
-                value={formData.message}
-                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
                 rows="4"
                 placeholder="Type your message here"
@@ -214,6 +231,7 @@ const CreateUsPage = () => {
 
             <div className="flex justify-center">
               <button
+              onClick={Conactus}
                 type="submit"
                 className="px-6 py-2 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition duration-200"
               >
@@ -237,14 +255,14 @@ const CreateUsPage = () => {
       </div>
 
       <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115769.58012750048!2d67.04134225845337!3d24.938903491810557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb338980b4615af%3A0xe968e4f0fd0119cd!2sUniversity%20of%20Karachi!5e0!3m2!1sen!2s!4v1733000028679!5m2!1sen!2s"
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115769.58012750048!2d67.04134225845337!3d24.938903491810557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb338980b4615af%3A0xe968e4f0fd0119cd!2sUniversity%20of%20Karachi!5e0!3m2!1sen!2s!4v1733000028679!5m2!1sen!2s"
+        width="100%"
+        height="450"
+        style={{ border: 0 }}
+        allowFullScreen=""
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      ></iframe>
     </>
   );
 };
