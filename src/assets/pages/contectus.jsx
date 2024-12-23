@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import conect from "../img/navbarlogo/rent-a-car-banner-1.jpg";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const CreateUsPage = () => {
   const [getData, sendData] = useState({
@@ -24,7 +26,11 @@ const CreateUsPage = () => {
         })
         .then((Dataa) => {
           console.log(Dataa);
-          alert("Data Send Successfully");
+          toast.success("Data Send Successfully!", {
+            position: "top-center",
+            autoClose: 2000,
+            // Apply Bounce transition
+          });
           sendData();
         })
         .catch((error) => {
@@ -231,7 +237,7 @@ const CreateUsPage = () => {
 
             <div className="flex justify-center">
               <button
-              onClick={Conactus}
+                onClick={Conactus}
                 type="submit"
                 className="px-6 py-2 bg-yellow-500 text-white font-semibold rounded-md hover:bg-yellow-600 transition duration-200"
               >
@@ -263,6 +269,7 @@ const CreateUsPage = () => {
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
       ></iframe>
+      <ToastContainer />
     </>
   );
 };

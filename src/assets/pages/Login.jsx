@@ -1,4 +1,9 @@
-import  { useState } from "react";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { useNavigate, Link } from "react-router-dom"; // Corrected import
+import { setLoginStatus } from "../authentication/Authenticate";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -6,18 +11,55 @@ function Login() {
     password: "",
   });
 
-  const [loginTime, setLoginTime] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const sing = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const currentTime = new Date().toLocaleString();
-    setLoginTime(currentTime);
-    console.log("Login Data:", { ...formData, loginTime: currentTime });
-    alert(`Login Successful! Login Time: ${currentTime}`);
+    try {
+      if (formData.email !== "" && formData.password !== "") {
+        const response = await fetch("https://ecommerce-two-alpha-61.vercel.app/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+
+        if (data === "User not found") {
+          toast.error("User not found", {
+            position: "top-center",
+          });
+        } else {
+          toast.success("Login Successful", {
+            position: "top-center",
+            theme: "dark",
+          });
+
+          // Save token in localStorage
+          localStorage.setItem("token", JSON.stringify(data));
+
+          // Update Redux store
+          dispatch(setLoginStatus({ isAuthenticated: true, token: data }));
+
+          // Redirect to the homepage
+          navigate("/");
+        }
+      } else {
+        toast.error("Please fill in correct details", {
+          position: "top-center",
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong. Please try again later.", {
+        position: "top-center",
+      });
+    }
   };
 
   return (
@@ -26,32 +68,40 @@ function Login() {
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
           Login
         </h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={sing}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="email">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="password">
+            <label
+              className="block text-sm font-medium text-gray-700"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -63,16 +113,17 @@ function Login() {
           >
             Login
           </button>
+          <p className="text-sm text-gray-700 mt-4">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-blue-500">
+              Sign up
+            </Link>{" "}
+            now.
+          </p>
         </form>
-
-        {loginTime && (
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
-              Last Login: <span className="font-bold">{loginTime}</span>
-            </p>
-          </div>
-        )}
       </div>
+
+      <ToastContainer />
     </div>
   );
 }

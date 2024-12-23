@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 export default function Booking() {
   const [carType, setCarType] = useState('suzuki-alto');
@@ -33,10 +35,16 @@ export default function Booking() {
 
     if (response.ok) {
       const result = await response.json();
-      alert(result.message);
-      setRedirectToHome(true); // Set redirectToHome to true upon successful booking
+      toast.success("Thank You ❤❤ " + result.message, {
+        position: "top-center",
+        autoClose: 4000, // Apply Bounce transition
+      });
+
+      setTimeout(() => {
+        setRedirectToHome(true);
+      }, 2000); // Delay for 2 seconds to match the toast autoClose
     } else {
-      alert('Booking failed');
+      toast.error('Booking failed. Please try again.');
     }
   };
 
@@ -155,6 +163,7 @@ export default function Booking() {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }
