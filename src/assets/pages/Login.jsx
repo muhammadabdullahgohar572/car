@@ -16,7 +16,7 @@ function Login() {
 
   const sing = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
-
+  
     try {
       if (formData.email !== "" && formData.password !== "") {
         const response = await fetch("https://ecommerce-two-alpha-61.vercel.app/login", {
@@ -26,9 +26,9 @@ function Login() {
           },
           body: JSON.stringify(formData),
         });
-
+  
         const data = await response.json();
-
+  
         if (data === "User not found") {
           toast.error("User not found", {
             position: "top-center",
@@ -38,15 +38,25 @@ function Login() {
             position: "top-center",
             theme: "dark",
           });
-
-          // Save token in localStorage
-          localStorage.setItem("token", JSON.stringify(data));
-
-          // Update Redux store
-          dispatch(setLoginStatus({ isAuthenticated: true, token: data }));
-
-          // Redirect to the homepage
-          navigate("/");
+  
+          // Assuming the token is in the `data.token` field
+          const token = data.token; // Adjust based on your backend response
+  
+          if (token) {
+            // Save the token (not the entire object) in localStorage
+            localStorage.setItem("token", token);
+            
+            // Update Redux store
+            dispatch(setLoginStatus({ isAuthenticated: true, token }));
+  
+            // Redirect to the homepage
+            navigate("/");
+          } else {
+            toast.error("Token not found", {
+              position: "top-center",
+              theme: "dark",
+            });
+          }
         }
       } else {
         toast.error("Please fill in correct details", {
@@ -61,6 +71,7 @@ function Login() {
       });
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">

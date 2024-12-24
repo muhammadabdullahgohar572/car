@@ -7,7 +7,9 @@ import { setLoginStatus } from "../authentication/Authenticate";
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false); // Controls mobile menu visibility
-  const isAuthenticated = useSelector((state) => state.authenticate.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state) => state.authenticate.isAuthenticated
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -51,7 +53,11 @@ export const Navbar = () => {
       <div className="bg-white shadow-sm flex justify-between items-center p-4">
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="Nafees Rent A Car Logo" className="w-36 h-auto" />
+          <img
+            src={logo}
+            alt="Nafees Rent A Car Logo"
+            className="w-36 h-auto"
+          />
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -99,13 +105,23 @@ export const Navbar = () => {
             </>
           )}
           {isAuthenticated && (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 text-sm font-semibold bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
-              aria-label="Logout"
-            >
-              Logout
-            </button>
+            <>
+              <Link to="/admin">
+                <button
+                  className="px-4 py-2 text-sm font-semibold bg-blue-500 hover:text-black text-white rounded-md hover:bg-yellow-400 transition duration-200"
+                  aria-label="Logout"
+                >
+                  Admin
+                </button>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm font-semibold bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
+                aria-label="Logout"
+              >
+                Logout
+              </button>
+            </>
           )}
           <Link to="/Booking">
             <button

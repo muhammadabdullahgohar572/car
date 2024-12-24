@@ -14,14 +14,14 @@ import { Services } from "./assets/pages/Services";
 import { Home } from "./assets/pages/Home";
 import Booking from "./assets/pages/Booking";
 import PrivateRoute from "./assets/pages/PrivateRoute"; // Import the PrivateRoute component
+import { Admin } from "./assets/Admin/Admin";
 
 function App() {
   return (
     <>
       {/* Navbar */}
       <div className="fixed top-0 left-0 z-30 w-full">
-        <Navbar /> 
-      
+        <Navbar />
       </div>
 
       {/* Main Content */}
@@ -101,6 +101,15 @@ function App() {
             element={
               <PrivateRoute>
                 <CarRental />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <Admin />
               </PrivateRoute>
             }
           />

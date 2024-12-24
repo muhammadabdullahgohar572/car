@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import conect from "../img/navbarlogo/rent-a-car-banner-1.jpg";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,8 +13,8 @@ const CreateUsPage = () => {
   });
 
   const Conactus = async () => {
-    if (getData.name && getData.email && getData.phone && getData.message) {
-      await fetch("ecommerce-two-alpha-61.vercel.app/contact", {
+    if (getData.name  && getData.email && getData.phone && getData.message) {
+      await fetch("https://ecommerce-two-alpha-61.vercel.app/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -156,7 +156,7 @@ const CreateUsPage = () => {
           <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">
             Get in Touch
           </h2>
-          <form>
+        
             <div className="mb-4">
               <label
                 className="block text-sm font-medium text-gray-700"
@@ -244,19 +244,9 @@ const CreateUsPage = () => {
                 Submit
               </button>
             </div>
-          </form>
 
-          <div className="mt-4 text-center">
-            <p className="text-sm text-gray-600">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="text-yellow-500 hover:text-yellow-600"
-              >
-                Login
-              </Link>
-            </p>
-          </div>
+
+          
         </div>
       </div>
 
