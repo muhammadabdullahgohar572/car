@@ -1,30 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../img/navbarlogo/Car-Logo-PNG-Image.png";
 import Bras from "../img/navbarlogo/1.png";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginStatus } from "../authentication/Authenticate";
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false); // Controls mobile menu visibility
+  const isAuthenticated = useSelector((state) => state.authenticate.isAuthenticated);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear Redux state and localStorage
+    dispatch(setLoginStatus({ isAuthenticated: false, token: null }));
+    localStorage.removeItem("token");
+
+    // Redirect to the homepage or login page
+    navigate("/login");
+  };
 
   return (
     <>
-      <div className="bg-black px-3 py-3  text-white sm:py-5 flex flex-col sm:flex-row sm:justify-around text-center">
+      {/* Top Bar */}
+      <div className="bg-black px-3 py-3 text-white sm:py-5 flex flex-col sm:flex-row sm:justify-around text-center">
         {/* Phone */}
-        <div className="mb-2 sm:mb-0  cursor-pointer flex items-center justify-center">
+        <div className="mb-2 sm:mb-0 cursor-pointer flex items-center justify-center">
           <i className="fa-solid fa-phone text-yellow-300 text-lg sm:text-xl"></i>
           <span className="text-sm md:text-lg ml-2 font-semibold">
             03133038410
           </span>
         </div>
         {/* Email */}
-        <div className="mb-2 sm:mb-0  cursor-pointer items-center justify-center">
+        <div className="mb-2 sm:mb-0 cursor-pointer items-center justify-center">
           <i className="fa-solid fa-envelope text-yellow-300 text-lg sm:text-xl"></i>
           <span className="text-sm md:text-base ml-2 font-semibold">
             engineermuhammadabdullahgohar @gmail.com
           </span>
         </div>
         {/* Address */}
-        <div className="flex items-center cursor-pointer  justify-center">
+        <div className="flex items-center cursor-pointer justify-center">
           <i className="fa-solid fa-location-dot text-yellow-300 text-lg sm:text-xl"></i>
           <span className="text-sm md:text-base ml-2 font-semibold">
             Nafees Rent A Car, Shahrah-e-Faisal, Karachi
@@ -41,7 +56,7 @@ export const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center space-x-6">
-          {[ 
+          {[
             { path: "/", label: "Home" },
             { path: "/Services", label: "Services" },
             { path: "/contactus", label: "Contact" },
@@ -61,24 +76,37 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* Buttons for Signup/Login/Booking */}
+        {/* Buttons for Signup/Login/Logout/Booking */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/Signup">
+          {!isAuthenticated && (
+            <>
+              <Link to="/Signup">
+                <button
+                  className="px-4 py-2 text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                  aria-label="Sign up"
+                >
+                  Signup
+                </button>
+              </Link>
+              <Link to="/Login">
+                <button
+                  className="px-4 py-2 text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                  aria-label="Login"
+                >
+                  Login
+                </button>
+              </Link>
+            </>
+          )}
+          {isAuthenticated && (
             <button
-              className="px-4 py-2 text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
-              aria-label="Sign up"
+              onClick={handleLogout}
+              className="px-4 py-2 text-sm font-semibold bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
+              aria-label="Logout"
             >
-              Signup
+              Logout
             </button>
-          </Link>
-          <Link to="/Login">
-            <button
-              className="px-4 py-2 text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
-              aria-label="Login"
-            >
-              Login
-            </button>
-          </Link>
+          )}
           <Link to="/Booking">
             <button
               className="px-4 py-2 text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
@@ -114,7 +142,7 @@ export const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="flex flex-col mt-16 space-y-4 px-6">
-          {[ 
+          {[
             { path: "/", label: "Home" },
             { path: "/Services", label: "Services" },
             { path: "/contactus", label: "Contact" },
@@ -134,23 +162,36 @@ export const Navbar = () => {
           ))}
 
           {/* Mobile Buttons */}
-          <div className="mt-4  grid grid-cols-1 gap-3">
-            <Link to="/Signup">
+          <div className="mt-4 grid grid-cols-1 gap-3">
+            {!isAuthenticated && (
+              <>
+                <Link to="/Signup">
+                  <button
+                    className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                    aria-label="Sign up"
+                  >
+                    Signup
+                  </button>
+                </Link>
+                <Link to="/Login">
+                  <button
+                    className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
+                    aria-label="Login"
+                  >
+                    Login
+                  </button>
+                </Link>
+              </>
+            )}
+            {isAuthenticated && (
               <button
-                className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
-                aria-label="Sign up"
+                onClick={handleLogout}
+                className="px-4 py-2 w-full text-sm font-semibold bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
+                aria-label="Logout"
               >
-                Signup
+                Logout
               </button>
-            </Link>
-            <Link to="/Login">
-              <button
-                className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
-                aria-label="Login"
-              >
-                Login
-              </button>
-            </Link>
+            )}
             <Link to="/Booking">
               <button
                 className="px-4 py-2 w-full text-sm font-semibold bg-yellow-300 text-black rounded-md hover:bg-yellow-500 transition duration-200"
