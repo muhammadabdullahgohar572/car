@@ -5,17 +5,15 @@ import "aos/dist/aos.css";
 export const Admin = () => {
   const [contactData, setContactData] = useState([]);
   const [bookingData, setBookingData] = useState([]);
-  const [userData, setUserData] = useState(null); // New state for user details
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [view, setView] = useState("ContactUs");
 
-  // Get username from JWT token in localStorage (optional)
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
-  // Fetching "Contact Us" data
   useEffect(() => {
     const fetchContactData = async () => {
       try {
@@ -26,7 +24,10 @@ export const Admin = () => {
           throw new Error("Failed to fetch contact data.");
         }
         const data = await response.json();
-        setContactData(data);
+        const filteredData = data.filter(
+          (item) => item.message && item.message.split(" ").length > 20
+        );
+        setContactData(filteredData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -36,7 +37,6 @@ export const Admin = () => {
     fetchContactData();
   }, []);
 
-  // Fetching "Booking Details" data
   useEffect(() => {
     const fetchBookingData = async () => {
       try {
@@ -57,16 +57,16 @@ export const Admin = () => {
     fetchBookingData();
   }, []);
 
-  // Fetching "User Details" data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch("https://ecommerce-two-alpha-61.vercel.app/userAllDeatils");
+        const response = await fetch(
+          "https://ecommerce-two-alpha-61.vercel.app/userAllDeatils"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch user details.");
         }
         const data = await response.json();
-        console.log(data); // Log the response to check the structure
         setUserData(data);
       } catch (err) {
         setError(err.message);
@@ -74,7 +74,11 @@ export const Admin = () => {
     };
     fetchUserData();
   }, []);
-  
+
+  const handleViewChange = (newView) => {
+    setView(newView);
+    alert(`Switched to ${newView} view.`);
+  };
 
   if (loading) {
     return <p className="text-center text-lg animate-pulse">Loading...</p>;
@@ -95,7 +99,9 @@ export const Admin = () => {
               <th className="border-b py-2 text-left px-4">#</th>
               <th className="border-b py-2 text-left px-4">Car Type</th>
               <th className="border-b py-2 text-left px-4">Pickup Location</th>
-              <th className="border-b py-2 text-left px-4">Drop-off Location</th>
+              <th className="border-b py-2 text-left px-4">
+                Drop-off Location
+              </th>
               <th className="border-b py-2 text-left px-4">Pick-up Date</th>
               <th className="border-b py-2 text-left px-4">Pick-up Time</th>
               <th className="border-b py-2 text-left px-4">Drop-off Time</th>
@@ -123,14 +129,21 @@ export const Admin = () => {
       </div>
     );
   };
+
   const UserDetails = () => {
     if (!userData || userData.length === 0) {
       return <p>No user data available.</p>;
     }
-  
+
     return (
-      <div className="max-w-full mx-auto bg-white shadow-md rounded-lg p-6" data-aos="fade-up">
-        <h2 className="mt-4 text-xl font-semibold text-gray-700" data-aos="zoom-in">
+      <div
+        className="max-w-full mx-auto bg-white shadow-md rounded-lg p-6"
+        data-aos="fade-up"
+      >
+        <h2
+          className="mt-4 text-xl font-semibold text-gray-700"
+          data-aos="zoom-in"
+        >
           User Details
         </h2>
         <div className="overflow-x-auto mt-4">
@@ -147,7 +160,12 @@ export const Admin = () => {
             </thead>
             <tbody>
               {userData.map((user, index) => (
-                <tr key={index} className="hover:bg-gray-100 transition-colors duration-300" data-aos="fade-up" data-aos-delay={`${index * 50}`}>
+                <tr
+                  key={index}
+                  className="hover:bg-gray-100 transition-colors duration-300"
+                  data-aos="fade-up"
+                  data-aos-delay={`${index * 50}`}
+                >
                   <td className="py-2 px-4">{index + 1}</td>
                   <td className="py-2 px-4">{user.username}</td>
                   <td className="py-2 px-4">{user.email}</td>
@@ -162,32 +180,36 @@ export const Admin = () => {
       </div>
     );
   };
-  
- 
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="flex gap-4 mb-6">
         <button
-          onClick={() => setView("ContactUs")}
+          onClick={() => handleViewChange("ContactUs")}
           className={`text-sm px-4 py-2 rounded ${
-            view === "ContactUs" ? "bg-blue-500 text-white" : "bg-gray-200 text-blue-500"
+            view === "ContactUs"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-blue-500"
           }`}
         >
           Contact Us Data
         </button>
         <button
-          onClick={() => setView("BookingDetails")}
+          onClick={() => handleViewChange("BookingDetails")}
           className={`text-sm px-4 py-2 rounded ${
-            view === "BookingDetails" ? "bg-blue-500 text-white" : "bg-gray-200 text-blue-500"
+            view === "BookingDetails"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-blue-500"
           }`}
         >
           Booking Details
         </button>
         <button
-          onClick={() => setView("UserDetails")}
+          onClick={() => handleViewChange("UserDetails")}
           className={`text-sm px-4 py-2 rounded ${
-            view === "UserDetails" ? "bg-blue-500 text-white" : "bg-gray-200 text-blue-500"
+            view === "UserDetails"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-blue-500"
           }`}
         >
           User Details
@@ -229,7 +251,19 @@ export const Admin = () => {
                       <td className="py-2 px-4">{item.name}</td>
                       <td className="py-2 px-4">{item.email}</td>
                       <td className="py-2 px-4">{item.phone}</td>
-                      <td className="py-2 px-4">{item.message}</td>
+                      {item.message.length > 50 ? (
+                        <span>
+                          {item.message.slice(0, 50)}...
+                          <button
+                            className="text-blue-500 hover:underline ml-2"
+                            onClick={() => alert(item.message)}
+                          >
+                            View More
+                          </button>
+                        </span>
+                      ) : (
+                        item.message
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -246,4 +280,3 @@ export const Admin = () => {
     </div>
   );
 };
-
